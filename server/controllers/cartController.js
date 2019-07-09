@@ -1,7 +1,8 @@
-const swag = ('./../models/swag')
+const swag = require('./../models/swag.js')
 
 module.exports = {
     add: (req, res) => {
+        console.log(swag)
         let { id } = req.params
         let { user } = req.session
         id = +id
@@ -9,6 +10,7 @@ module.exports = {
         const index = user.cart.findIndex(swag => swag.id === id)
 
         if (index === -1) {
+            console.log(swag)
             const selectedSwag = swag.find(swag => swag.id === +id)
 
             user.cart.push(selectedSwag)
