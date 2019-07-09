@@ -2,13 +2,14 @@ const swag = ('./../models/swag')
 
 module.exports = {
     add: (req, res) => {
-        const { id } = req.params
+        let { id } = req.params
         let { user } = req.session
+        id = +id
 
-        const index = user.cart.findIndex(swag => swag.id == id)
+        const index = user.cart.findIndex(swag => swag.id === id)
 
         if (index === -1) {
-            const selectedSwag = swag.find(swag => swag.id == id)
+            const selectedSwag = swag.find(swag => swag.id === +id)
 
             user.cart.push(selectedSwag)
             user.total += selectedSwag.prices
@@ -16,10 +17,12 @@ module.exports = {
         res.status(200).send(user)
     },
     delete: (req, res) => {
-        const { id } = req.params
+        let { id } = req.params
         const { user } = req.session
-        const index = user.cart.findIndex(swag => swag.id == id)
-        const selectedSwag = swag.find(swag => swag.id == id)
+        id = +id
+
+        const index = user.cart.findIndex(swag => swag.id === id)
+        const selectedSwag = swag.find(swag => swag.id === id)
 
         if (index !== -1) {
             user.cart.splice(index, 1)
